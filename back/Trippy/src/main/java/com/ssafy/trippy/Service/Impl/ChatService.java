@@ -26,7 +26,6 @@ import java.util.Optional;
 public class ChatService {
     // 채팅방(topic)에 발행되는 메시지를 처리할 Listner
     private final RedisMessageListenerContainer redisMessageListener;
-    private final ChatRoomRepository chatRoomRepository;
     // 구독 처리 서비스
     private final RedisSubscriber redisSubscriber;
     // Redis

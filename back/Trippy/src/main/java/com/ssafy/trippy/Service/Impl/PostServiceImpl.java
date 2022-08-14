@@ -209,11 +209,11 @@ public class PostServiceImpl implements PostService {
                 }
             }
         }
-        for (int i = 0; i < detailLocations.size(); i++) {
-            detailLocationList.get(i).update(detailLocations.get(i).getDetailLocationContent(),
-                    detailLocations.get(i).getDetailLocationName(),
-                    detailLocations.get(i).getRating(),
-                    detailLocations.get(i).getFilename());
+        for (int i = 0; i < detailLocationsTmp.size(); i++) {
+            detailLocationList.get(i).update(detailLocationsTmp.get(i).getDetailLocationContent(),
+                    detailLocationsTmp.get(i).getDetailLocationName(),
+                    detailLocationsTmp.get(i).getRating(),
+                    detailLocationsTmp.get(i).getFilename());
         }
 
         // PostTransport 테이블에도 수정된 값 넣어주기

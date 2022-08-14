@@ -36,8 +36,8 @@ public class ChatRoomController {
     }
 
     // 채팅방 생성
-    @PostMapping("/room")
-    public ResponseEntity<?> createRoom(@RequestParam String roomName) {
+    @PostMapping("/room/{roomName}")
+    public ResponseEntity<?> createRoom(@PathVariable("roomName") String roomName) {
         try {
             chatService.createChatRoom(roomName);
         } catch (Exception e) {
