@@ -9,6 +9,7 @@ import com.ssafy.trippy.Repository.*;
 import com.ssafy.trippy.Service.PostService;
 import com.ssafy.trippy.Service.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.engine.messageinterpolation.InterpolationTerm;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -192,68 +193,88 @@ public class PostServiceImpl implements PostService {
             requestPostDto.setLocation_id(locationId);
         }
 
-        List<DetailLocation> detailLocations = requestPostDto.toEntity().getDetailLocations().stream().collect(Collectors.toList());
+
+        List<DetailLocation> oldDetailLocation = detailLocationRepository.findAllByPostId(post.getId()).get();
+        List<DetailLocation> newDetailLocations = requestPostDto.toEntity().getDetailLocations().stream().collect(Collectors.toList());
         List<DetailLocation> detailLocationsTmp = new ArrayList<>();
-        for (int i = 0; i < detailLocations.size(); i++) {
-            DetailLocation detailLocation = detailLocations.get(i);
+
+        // 기존의 detailLocation을 삭제
+        for (DetailLocation detailLocation : oldDetailLocation) {
+            detailLocationRepository.delete(detailLocation);
+        }
+        // 기존의 detailLocation을 삭제 후 새로운 detailLocation 추가
+        for (int i = 0; i < newDetailLocations.size(); i++) {
+            DetailLocation detailLocation = newDetailLocations.get(i);
             detailLocation.setPost(post);
+            detailLocationRepository.save(detailLocation);
             detailLocationsTmp.add(detailLocation);
             // 빈 이미지나 이미지 파일 이름이 db저장명이랑 똑같으면 처리 x
-            if(!images.get(i).getOriginalFilename().equals("empty.txt") & !(images.get(i).getOriginalFilename().equals(detailLocations.get(i).getFilename()))) {
+            if(!images.get(i).getOriginalFilename().equals("empty.txt") & !(images.get(i).getOriginalFilename().equals(newDetailLocations.get(i).getFilename()))) {
                 try {
                     ResponseImageDto responseImageDto = s3Uploader.upload(images.get(i),"static");
-                    s3Uploader.deleteS3(detailLocations.get(i).getFilename());
+                    s3Uploader.deleteS3(newDetailLocations.get(i).getFilename());
                     detailLocation.setFilename(responseImageDto.getFileName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        for (int i = 0; i < detailLocationsTmp.size(); i++) {
-            detailLocationList.get(i).update(detailLocationsTmp.get(i).getDetailLocationContent(),
-                    detailLocationsTmp.get(i).getDetailLocationName(),
-                    detailLocationsTmp.get(i).getRating(),
-                    detailLocationsTmp.get(i).getFilename());
-        }
+//        for (int i = 0; i < detailLocationsTmp.size(); i++) {
+//            detailLocationList.get(i).update(detailLocationsTmp.get(i).getDetailLocationContent(),
+//                    detailLocationsTmp.get(i).getDetailLocationName(),
+//                    detailLocationsTmp.get(i).getRating(),
+//                    detailLocationsTmp.get(i).getFilename());
+//        }
 
         // PostTransport 테이블에도 수정된 값 넣어주기
+        // 기존의 transport 삭제
         List<PostTransport> oldPostTransport = postTransportRepository.findAllPostTransportByPost(post);
-        List<PostTransport> postTransport = requestPostDto.toEntity().getPostTransports().stream().collect(Collectors.toList());
-        List<PostTransport> changePostTransportList = new ArrayList<>();
-        for (PostTransport postTrans : postTransport) {
-            postTrans.setPost(post);
-            changePostTransportList.add(postTrans);
+        for (PostTransport postTransport : oldPostTransport) {
+            postTransportRepository.delete(postTransport);
         }
 
-        for (int i = 0; i < postTransport.size(); i++) {
-            oldPostTransport.get(i).update(changePostTransportList.get(i).getTransport());
+        // 기존의 transport 삭제 후 새로운 transport 추가
+        List<PostTransport> newPostTransport = requestPostDto.toEntity().getPostTransports().stream().collect(Collectors.toList());
+        for (PostTransport postTrans : newPostTransport) {
+            postTrans.setPost(post);
+            postTransportRepository.save(postTrans);
         }
+
+//        for (int i = 0; i < postTransport.size(); i++) {
+//            oldPostTransport.get(i).update(changePostTransportList.get(i).getTransport());
+//        }
 
         // Route 테이블에도 수정된 값 넣어주기.
         List<Route> oldRoute = routeRepository.findAllByPostId(post.getId());
-        List<Route> routes = requestPostDto.toEntity().getRoutes().stream().collect(Collectors.toList());
-        List<Route> changeRoutes = new ArrayList<>();
-        for (Route route : routes) {
-            route.setRoutePost(post);
-            changeRoutes.add(route);
-        }
+        List<Route> newRoutes = requestPostDto.toEntity().getRoutes().stream().collect(Collectors.toList());
 
-        for (int i = 0; i < routes.size(); i++) {
-            oldRoute.get(i).update(changeRoutes.get(i).getRouteName(),
-                    changeRoutes.get(i).getIdx(),
-                    changeRoutes.get(i).getLat(),
-                    changeRoutes.get(i).getLng());
+        // 기존의 oldRoute 삭제
+        for (Route route : oldRoute) {
+            routeRepository.delete(route);
 
         }
+        // 기존의 Route 삭제 후 새로운 route 추가
+        for (Route newRoute : newRoutes) {
+            newRoute.setRoutePost(post);
+            routeRepository.save(newRoute);
+        }
+
+//        for (int i = 0; i < routes.size(); i++) {
+//            oldRoute.get(i).update(changeRoutes.get(i).getRouteName(),
+//                    changeRoutes.get(i).getIdx(),
+//                    changeRoutes.get(i).getLat(),
+//                    changeRoutes.get(i).getLng());
+//
+//        }
         post.update(
                 requestPostDto.getTitle(),
                 requestPostDto.getCompany(),
                 requestPostDto.getCount(),
                 requestPostDto.getStartDate(),
                 requestPostDto.getEndDate(),
-                postTransport,
+                newPostTransport,
                 detailLocationsTmp,
-                changeRoutes,
+                newRoutes,
                 location.get());
     }
 
