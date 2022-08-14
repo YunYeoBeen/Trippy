@@ -199,7 +199,7 @@ public class PostServiceImpl implements PostService {
             detailLocation.setPost(post);
             detailLocationsTmp.add(detailLocation);
             // 빈 이미지나 이미지 파일 이름이 db저장명이랑 똑같으면 처리 x
-            if(!images.get(i).getOriginalFilename().equals("empty.txt") && !(images.get(i).getOriginalFilename().equals(detailLocations.get(i).getFilename()))) {
+            if(!images.get(i).getOriginalFilename().equals("empty.txt") & !(images.get(i).getOriginalFilename().equals(detailLocations.get(i).getFilename()))) {
                 try {
                     ResponseImageDto responseImageDto = s3Uploader.upload(images.get(i),"static");
                     s3Uploader.deleteS3(detailLocations.get(i).getFilename());
