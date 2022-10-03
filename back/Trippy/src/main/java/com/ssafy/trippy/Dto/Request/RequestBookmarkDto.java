@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.trippy.Domain.Bookmark;
 import com.ssafy.trippy.Domain.CommunityPost;
 import com.ssafy.trippy.Domain.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class RequestBookmarkDto {
 
     @JsonProperty("community_post_id")

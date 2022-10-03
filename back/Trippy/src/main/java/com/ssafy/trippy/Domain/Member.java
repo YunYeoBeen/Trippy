@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
-@ToString
 public class Member extends BaseEntity implements UserDetails{
     @Id
     @GeneratedValue
@@ -59,7 +58,7 @@ public class Member extends BaseEntity implements UserDetails{
     private String img_path;
 
 //    @JsonIgnore
-    private String desc;
+    private String description;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
@@ -77,7 +76,7 @@ public class Member extends BaseEntity implements UserDetails{
     private List<Follow> followings = new ArrayList<>();
 
     @Builder
-    public Member(Long id, String name, String password, String email, String phone, int gender, LocalDateTime birth, String img_path, String desc, List<Bookmark> bookmarks, List<LikePost> likePosts) {
+    public Member(Long id, String name, String password, String email, String phone, int gender, LocalDateTime birth, String img_path, String description, List<Bookmark> bookmarks, List<LikePost> likePosts) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -86,7 +85,7 @@ public class Member extends BaseEntity implements UserDetails{
         this.gender = gender;
         this.birth = birth;
         this.img_path = img_path;
-        this.desc = desc;
+        this.description = description;
         this.bookmarks = bookmarks;
         this.likePosts = likePosts;
     }
@@ -98,11 +97,13 @@ public class Member extends BaseEntity implements UserDetails{
         this.gender = updateMemberDto.getGender();
         this.birth = updateMemberDto.getBirth();
         this.img_path = updateMemberDto.getImg_path();
-        this.desc = updateMemberDto.getDesc();
+        this.description = updateMemberDto.getDescription();
     }
+
     public void updatePw(String pw){
         this.password = pw;
     }
+
     @Override
     public String getPassword(){
         return this.password;

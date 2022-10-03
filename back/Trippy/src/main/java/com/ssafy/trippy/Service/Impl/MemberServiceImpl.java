@@ -9,6 +9,7 @@ import com.ssafy.trippy.Dto.Response.ResponseMemberDto;
 import com.ssafy.trippy.Dto.Update.UpdateMemberDto;
 import com.ssafy.trippy.Repository.MemberRepository;
 import com.ssafy.trippy.Service.MemberService;
+import com.ssafy.trippy.Service.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,11 @@ public class MemberServiceImpl implements MemberService {
 
     private final JwtProvider jwtProvider;
 
+    private final S3Uploader s3Uploader;
     @Override
     public ResponseMemberDto signup(RequestMemberDto requestMemberDto) {
         if(chkDuplicate(requestMemberDto.getEmail())){
-            throw new IllegalArgumentException("이메일이 중복됩니다.");
+            return new ResponseMemberDto(Member.builder().build());
         }
         String rawPassword = requestMemberDto.getPassword();
         String encodedPassword = passwordEncoder.encode(rawPassword);
@@ -80,7 +82,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public ResponseMemberDto selectMember(Long id){
         Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("아이디가 존재하지 않습니다."));
-        return new ResponseMemberDto(member);
+        ResponseMemberDto responseMemberDto = new ResponseMemberDto(member);
+        if(member.getImg_path()!=null)
+            responseMemberDto.setImg_link(s3Uploader.getS3(member.getImg_path()));
+        return responseMemberDto;
     }
 
     @Override
@@ -97,4 +102,13 @@ public class MemberServiceImpl implements MemberService {
         member.updatePw(encodedPassword);
         memberRepository.save(member);
     }
+
+    @Override
+    public Long getIdByToken(String token){
+        String email = jwtProvider.getUserPk(token);
+        System.out.println(email);
+        Long id = memberRepository.findByEmail(email).orElseThrow().getId();
+        return id;
+    }
+
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "MEMBER_ID", "COMMUNITY_POST_ID"}))
 public class Bookmark extends BaseEntity {
 
     @Id

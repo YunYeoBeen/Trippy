@@ -10,25 +10,17 @@ public class RequestLocationDto {
 
     private String cityName;
 
-    private Double latitude;
-
-    private Double longitude;
-
     public Location toEntity() {
         return Location.builder()
                 .id(id)
                 .cityName(cityName)
                 .countryName(countryName)
-                .latitude(latitude)
-                .longitude(longitude)
                 .build();
     }
 
     @Builder
-    public RequestLocationDto(String countryName, String cityName, Double latitude, Double longitude) {
+    public RequestLocationDto(String countryName, String cityName) {
         this.countryName = countryName;
         this.cityName = cityName;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 }

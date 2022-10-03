@@ -15,15 +15,15 @@ public class UpdateMemberDto {
     private int gender;
     private LocalDateTime birth;
     private String img_path;
-    private String desc;
+    private String description;
 
-    public UpdateMemberDto(String name,String password,String email,String phone,int gender,LocalDateTime birth,String img_path,String desc){
+    public UpdateMemberDto(String name,String email,String phone,int gender,LocalDateTime birth,String img_path,String description){
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.birth = birth;
         this.img_path = img_path;
-        this.desc = desc;
+        this.description = description;
     }
 }

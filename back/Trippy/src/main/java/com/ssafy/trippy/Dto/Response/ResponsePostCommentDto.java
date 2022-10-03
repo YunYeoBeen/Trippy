@@ -1,40 +1,45 @@
 package com.ssafy.trippy.Dto.Response;
 
-import com.ssafy.trippy.Domain.Post;
 import com.ssafy.trippy.Domain.PostComment;
-import com.ssafy.trippy.Dto.Request.RequestPostCommentDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class ResponsePostCommentDto {
+@AllArgsConstructor
+public class ResponsePostCommentDto implements Serializable {
 
     private Long id;
-
     private String content;
+    private Long postId;
+    private Long memberId;
+    private Long parentId;
 
-    // memberId
+    private List<PostComment> children = new ArrayList<>();
 
-    private Post post;
-
-    private LocalDateTime regDt;
-
-    public ResponsePostCommentDto(PostComment postComment){
-        this.id = postComment.getId();
-        this.content = postComment.getContent();
-        this.post = postComment.getPost();
-        this.regDt = postComment.getRegDt();
-    }
     @Builder
-    public ResponsePostCommentDto(Long id, String content, Post post, LocalDateTime regDt){
+    public ResponsePostCommentDto(PostComment postComment) {
+        this.content = postComment.getContent();
+        this.postId = postComment.getPost().getId();
+        this.parentId = postComment.getParent()== null ? 0 : postComment.getParent().getId();
+        this.memberId = postComment.getMember().getId();
+    }
+
+    public ResponsePostCommentDto(Long id, String content, Long memberId) {
         this.id = id;
         this.content = content;
-        this.post = post;
-        this.regDt = regDt;
+        this.memberId = memberId;
+    }
+
+
+    public static ResponsePostCommentDto convertCommentToDto(PostComment postComment){
+        return new ResponsePostCommentDto(postComment.getId(), postComment.getContent(), postComment.getMember().getId());
+
     }
 
 }

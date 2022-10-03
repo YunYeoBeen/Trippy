@@ -21,7 +21,7 @@ public class MemberBadge extends BaseEntity{
 
 //    @Column(nullable = false)
 //    @NotBlank(message="멤버 뱃지 설명은 필수입니다.")
-    private String desc;
+    private String description;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "MENBER_ID")

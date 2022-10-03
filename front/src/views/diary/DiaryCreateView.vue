@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>Diary Create</h1>
+  <div class="diary-create-div">
     <diary-form :diary="diary" action="create"></diary-form>
   </div>
 </template>
@@ -16,11 +15,17 @@ export default {
   data() {
     return {
       diary: {
+        id: null,
         title: '',
-        season: [],
-        company: '가족',
+        countryName: '대한민국',
+        cityName: '서울특별시',
+        startDate: '',
+        endDate: '',
+        company: 1,
         count: 1,
-        transport: [],
+        postTransports: [],
+        routes: [],
+        detailLocations: [],
       }
     }
   }
@@ -29,5 +34,7 @@ export default {
 </script>
 
 <style scoped>
-
+.diary-create-div {
+  margin: 1rem 1rem 2rem 1rem;
+}
 </style>

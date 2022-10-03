@@ -35,13 +35,16 @@ export default {
     MapLocation,
     PlusIcon
   },
+  props: {
+    action: String
+  },
   data() {
     return {
       flag: 0
     }
   },
   computed: {
-    ...mapGetters(['routeGeocodes', 'routeNames'])
+    ...mapGetters(['routeGeocodes', 'routeNames', 'diaryTemp']),
   },
   methods: {
     ...mapActions(['addGeocode', 'addRoute', 'deleteRoute']),
@@ -98,9 +101,9 @@ export default {
           center: this.routeGeocodes[this.routeGeocodes.length - 1],
           zoom: 13,
       });
-      console.log(this.routeGeocodes)
+      // console.log(this.routeGeocodes)
       this.routeGeocodes.forEach((each) => {
-        console.log(each)
+        // console.log(each)
         let labelNum = (this.routeGeocodes.indexOf(each)+1).toString()
         new google.maps.Marker({
             position: each,
@@ -117,9 +120,20 @@ export default {
       })
       routePath.setMap(map)
     },
+
+    // uploadRoute() {
+    //   if (this.action === 'update') {
+    //     this.routeGeocodes = this.diaryTemp.geocodes
+    //     this.routeNames = this.diaryTemp.routes
+    //   } else {
+    //     this.routeGeocodes = []
+    //     this.routeNames = []
+    //   }
+    // }
   },
   mounted() {
     this.initMap()
+    // this.uploadRoute()
   },
 }
 </script>

@@ -11,10 +11,12 @@
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.10",
+    "lodash": "^4.17.21",
     "vue": "^3.2.37",
     "vue-cookies": "^1.8.1",
     "vue-router": "^4.0.3",
     "vue3-cookies": "^1.0.6",
+    "vue3-geolocation": "^1.0.0",
     "vue3-google-map": "^0.13.2",
     "vuex": "^4.0.0"
   },

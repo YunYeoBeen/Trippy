@@ -1,5 +1,5 @@
 import store from '../store'
-
+import VueCookies from 'vue-cookies'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/home/HomeView.vue'
 import SearchView from '@/views/home/SearchView.vue'
@@ -7,11 +7,12 @@ import SearchView from '@/views/home/SearchView.vue'
 import DiaryCreateView from '../views/diary/DiaryCreateView.vue'
 import DiaryDetailView from '../views/diary/DiaryDetailView.vue'
 import DiaryEditView from '../views/diary/DiaryEditView.vue'
-import DiaryCommentView from '../views/diary/DiaryCommentView.vue'
+// import DiaryCommentView from '../components/diary/DiaryCommentView.vue'
 
 import LoginView from '@/views/account/LoginView.vue'
 import SignUpView from '@/views/account/SignUpView.vue'
 import SignUpOptionView from '@/views/account/SignUpOptionView.vue'
+import SettingView from '@/views/account/SettingView.vue'
 import PasswordFindView from '@/views/account/PasswordFindView.vue'
 import PasswordChangeView from '@/views/account/PasswordChangeView.vue'
 
@@ -22,6 +23,7 @@ import CommunityCreateView from '@/views/community/CommunityCreateView.vue'
 import CommunityView from '@/views/community/CommunityView.vue'
 import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityEditView from '@/views/community/CommunityEditView.vue'
+import ChatListView from '@/views/community/ChatListView.vue'
 
 import BadgeListView from '../views/badge/BadgeListView.vue'
 
@@ -55,6 +57,11 @@ const routes = [
     component: SignUpOptionView
   },
   {
+    path: '/setting',
+    name: 'setting',
+    component: SettingView
+  },
+  {
     path: '/passwordchange',
     name: 'passwordChange',
     component: PasswordChangeView
@@ -82,23 +89,23 @@ const routes = [
     component: DiaryCreateView
   },
   {
-    path: '/diary',
+    path: '/diary/:diaryPk',
     // 나중에 pk 추가하기
     name: 'diaryDetail',
     component: DiaryDetailView
   },
   {
-    path: '/diary/edit',
+    path: '/diary/edit/:diaryPk',
     // 나중에 pk 추가하기
     name: 'diaryEdit',
     component: DiaryEditView
   },
-  {
-    path: '/diary/comment',
-    // 나중에 pk 추가하기
-    name: 'diaryComment',
-    component: DiaryCommentView
-  },
+  // {
+  //   path: '/diary/comment',
+  //   // 나중에 pk 추가하기
+  //   name: 'diaryComment',
+  //   component: DiaryCommentView
+  // },
 
 
   {
@@ -122,7 +129,8 @@ const routes = [
   },
 
   {
-    path: '/community/:communityId',
+    path: '/community/:postPk',
+        // 나중에 pk 추가하기
     name: 'communityDetail',
     component: CommunityDetailView
   },
@@ -132,7 +140,7 @@ const routes = [
     component: CommunityCreateView
   },
   {
-    path: '/community/edit',
+    path: '/community/edit/:postPk',
     name: 'communityEdit',
     component: CommunityEditView
   },
@@ -142,6 +150,12 @@ const routes = [
     path: '/badge',
     name: 'badgeList',
     component: BadgeListView
+  },
+  
+  {
+    path: '/chat',
+    name: 'chatList',
+    component: ChatListView
   },
   
 
@@ -156,7 +170,9 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  const { isLoggedIn } = store.getters
+  // const { isLoggedIn } = store.getters
+  const refreshToken = VueCookies.get('refreshToken')
+  const accessToken = VueCookies.get('accessToken')
 
   const authPages = [
     'diaryCreate', 'diaryEdit', 'diaryDetail', 'diaryComment',
@@ -167,11 +183,21 @@ router.beforeEach((to, from, next) => {
 
   const isAuthRequired = authPages.includes(to.name)
   
-  if ( isAuthRequired && !isLoggedIn ) {
-    next({ name: 'login' })
-  } else {
-    next()
-  }
+    if (isAuthRequired && !accessToken && refreshToken){
+      //refreshToken은 있고 accessToken이 없을 경우 토큰 재발급 요청
+      store.dispatch('reissueToken');
+    }
+    if (isAuthRequired && accessToken){
+      //accessToken이 있을 경우 진행
+      return next();
+    }
+    if (isAuthRequired && !accessToken && !refreshToken){
+      console.log(store)
+      //2개 토큰이 모두 없을 경우 로그인페이지로
+      alert('로그인을 해주세요!')
+      return next({name: 'login'});
+    }
+    return next();
 })
 
 export default router

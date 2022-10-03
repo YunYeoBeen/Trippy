@@ -36,11 +36,9 @@ public class Location extends BaseEntity {
     private Double longitude;
 
     @Builder
-    public Location(Long id, String countryName, String cityName, Double latitude, Double longitude) {
+    public Location(Long id, String countryName, String cityName) {
         this.id = id;
         this.countryName = countryName;
         this.cityName = cityName;
-        this.latitude = latitude;
-        this.longitude = longitude;
     }
 }

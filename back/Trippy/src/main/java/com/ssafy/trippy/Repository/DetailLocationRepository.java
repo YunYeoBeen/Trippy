@@ -10,4 +10,11 @@ import java.util.List;
 @Repository
 public interface DetailLocationRepository extends JpaRepository<DetailLocation, Long> {
     List<DetailLocation> findDetailLocationById(Long id);
+import java.util.Optional;
+
+@Repository
+public interface DetailLocationRepository extends JpaRepository<DetailLocation, Long> {
+//    List<DetailLocation> findDetailLocationById(Long id);
+
+    Optional<List<DetailLocation>> findAllByPostId(Long postId);
 }

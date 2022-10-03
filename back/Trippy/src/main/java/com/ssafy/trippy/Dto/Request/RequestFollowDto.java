@@ -5,6 +5,7 @@ import com.ssafy.trippy.Domain.Follow;
 import com.ssafy.trippy.Domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class RequestFollowDto {
     private Long id;

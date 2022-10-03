@@ -26,4 +26,6 @@ public interface MemberService {
     void logout(Long id, String accessToken);
 
     void changePw(RequestLoginDto requestLoginDto);
+
+    Long getIdByToken(String token);
 }

@@ -1,5 +1,6 @@
 package com.ssafy.trippy.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,9 +37,7 @@ public class DetailLocation extends BaseEntity{
     @JoinColumn(name="POST_ID")
     private Post post;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="LOCATION_ID")
-    private Location location;
+    private String filename;
 
     public void setPost(Post post){
         this.post = post;
@@ -53,7 +52,11 @@ public class DetailLocation extends BaseEntity{
         this.rating = rating;
         this.imgPath = imgPath;
         this.post = post;
-        this.location = location;
+        post.getDetailLocations().add(this);
+    }
+
+    public void setFilename(String filename){
+        this.filename = filename;
     }
 
     public void update(String detailLocationContent, String detailLocationName, float rating, String imgPath){
@@ -62,4 +65,22 @@ public class DetailLocation extends BaseEntity{
         this.rating = rating;
         this.imgPath = imgPath;
     }
+    @Builder
+    public DetailLocation(Long id, String detailLocationName, float rating, String detailLocationContent,Post post,String filename) {
+        this.id=id;
+        this.detailLocationContent = detailLocationContent;
+        this.detailLocationName = detailLocationName;
+        this.rating = rating;
+        this.post = post;
+        this.filename = filename;
+    }
+
+
+    public void update(String detailLocationContent, String detailLocationName, float rating, String filename){
+        this.detailLocationContent = detailLocationContent;
+        this.detailLocationName = detailLocationName;
+        this.rating = rating;
+        this.filename = filename;
+    }
+
 }

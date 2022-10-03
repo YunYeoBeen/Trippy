@@ -8,9 +8,10 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // import * as VueGoogleMaps from "vue3-google-map"
 import IconBase from '@/components/IconBase.vue'
+import Vue3Geolocation from 'vue3-geolocation'
 
 createApp(App).use(router).use(store).use(router).use(useCookies)
-.use(store).use(ElementPlus).component('icon-base', IconBase)
+.use(store).use(ElementPlus).component('icon-base', IconBase).use(Vue3Geolocation)
 // .use(VueGoogleMaps, {
 //   load: {
 //     libraries: "places",

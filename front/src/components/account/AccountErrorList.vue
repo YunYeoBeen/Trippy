@@ -19,7 +19,12 @@ export default {
 </script>
 
 <style scoped>
-    div {
-        color: red
-    }
+  div {
+      color: red;
+      font-size: 12px;
+  }
+
+  p {
+    margin: 0;
+  }
 </style>

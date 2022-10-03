@@ -78,7 +78,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['stories'])
+    // update할 때 diaryTemp 대신 해당 pk 다이어리 가져와야 함 -> 편집 창으로 들어오면 해당 pk 다이어리 내용 fetch하는 함수
+    ...mapGetters(['stories', 'diaryTemp'])
   },
   methods: {
     ...mapActions(['createStory', 'deleteStory']),
@@ -114,13 +115,13 @@ export default {
       this.newStories.splice(index, 1)
     },
     uploadPhoto(index) {
-      console.log(index)
+      // console.log(index)
       let addedPhotoList = this.newStories[index].photoList
       // console.log(this.$refs.files)
       // console.log(this.$refs.files[index].files)
       for (let i = 0; i < this.$refs.files[index].files.length; i++) {
         let photo = this.$refs.files[index].files[i]
-        console.log(photo)
+        // console.log(photo)
         if (photo.type.substr(0, 5) === "image") {
           addedPhotoList = [
             ...addedPhotoList,
@@ -136,13 +137,13 @@ export default {
       this.newStories[index].photoList = addedPhotoList
       // let fileInput = document.getElementById("file")
       // fileInput.value = ''
-      console.log(this.newStories[index].photoList)
+      // console.log(this.newStories[index].photoList)
     },
     removePhoto(index, num) {
       this.newStories[index].photoList.splice(num, 1)
     },
     addPhoto(index) {
-      console.log('add', index)
+      // console.log('add', index)
       let addedPhotoList = this.newStories[index].photoList
       // console.log(this.$refs.files)
       console.log(this.$refs.files[index].files)

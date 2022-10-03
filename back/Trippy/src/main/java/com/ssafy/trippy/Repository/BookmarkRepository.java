@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     List<Bookmark> findAllByMemberId(Long memberId);
     void deleteByMemberIdAndCommunityPostId(Long memberId, Long communityPostId);
+    boolean existsByMemberIdAndCommunityPostId(Long memberId, Long communityPostId);
 }

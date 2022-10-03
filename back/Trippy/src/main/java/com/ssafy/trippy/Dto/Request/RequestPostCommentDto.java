@@ -1,47 +1,45 @@
 package com.ssafy.trippy.Dto.Request;
 
-import com.ssafy.trippy.Domain.Post;
+import com.ssafy.trippy.Domain.Member;
 import com.ssafy.trippy.Domain.PostComment;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.ssafy.trippy.Dto.Response.ResponsePostCommentDto;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class RequestPostCommentDto {
+
     private Long id;
-
     private String content;
+    private Long memberId;
 
-    private LocalDateTime regDt;
+    private Long postId;
 
-
-    private Byte isDelete;
-
-    // 대댓글 나중에
-    private Long parent;
-    private Long rootComment;
-    private Long childComment;
-
-    private Post post;
-
-    public PostComment toEntity() {
-        return PostComment.builder()
-                .id(id)
-                .post(Post.builder().id(post.getId()).build())
-                .content(content)
-                .regDt(regDt)
-                .build();
-
-    }
+    private Long parentId;
+    private List<PostComment> children = new ArrayList<>();
 
     @Builder
-    public RequestPostCommentDto(Long id, String content, LocalDateTime regDt, Post post) {
+    public RequestPostCommentDto(Long id, String content, Long memberId) {
         this.id = id;
         this.content = content;
-        this.regDt = regDt;
-        this.post = post;
+        this.memberId = memberId;
+
     }
+
+    public PostComment toEntity(){
+        return PostComment.builder()
+                .id(id)
+                .content(content)
+                .member(Member.builder().id(memberId).build())
+                .children(children)
+                .build();
+    }
+
+
 }
