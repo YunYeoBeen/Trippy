@@ -21,6 +21,20 @@ public class RequestDetailLocationDto {
 
     private String detailLocationContent;
 
+    private String imgPath;
+
+    private Long post_id;
+
+    private Long location_id;
+
+    public DetailLocation toEntity() {
+        return DetailLocation.builder()
+                .detailLocationContent(detailLocationContent)
+                .imgPath(imgPath)
+                .post(Post.builder().id(post_id).build())
+                .location(Location.builder().id(location_id).build())
+                .rating(rating)
+                .detailLocationName(detailLocationName)
     private String filename;
 
     private Long post_id;

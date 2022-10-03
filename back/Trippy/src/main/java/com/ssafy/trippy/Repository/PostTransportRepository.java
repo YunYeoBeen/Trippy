@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repositorye/BE/Transport
+public interface PostTransportRepository extends JpaRepository<PostTransport, Long> {
+
+    List<PostTransport> findAllPostTransportByPost(Post post);
 public interface PostTransportRepository extends JpaRepository<PostTransport, Long>, PostTransportRepositoryCustom {
     List<PostTransport> findAllPostTransportByPost(Post post);
     List<PostTransport> findAllPostTransportByTransport(Transport transport);

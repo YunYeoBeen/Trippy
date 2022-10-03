@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class PostTransport extends BaseEntity{
 
@@ -33,6 +34,9 @@ public class PostTransport extends BaseEntity{
         post.getPostTransports().add(this);
     }
 
+    public void update(Transport transport){
+        this.transport = transport;
+    }
     public void setTransport(Transport transport){
         this.transport = transport;
 

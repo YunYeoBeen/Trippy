@@ -1,5 +1,7 @@
 package com.ssafy.trippy.Dto.Request;
 
+import com.ssafy.trippy.Domain.*;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.trippy.Domain.*;
 import lombok.*;
@@ -28,6 +30,17 @@ public class RequestPostDto {
     private LocalDateTime endDate;
     private int representativeImg;
     private Long member_id;
+    private List<RequestPostTransportDto> postTransports;
+    private List<RequestDetailLocationDto> detailLocations;
+
+    public Post toEntity() {
+        List<DetailLocation> detailLocationList = new ArrayList<>();
+        List<PostTransport> postTransportList = new ArrayList<>();
+        for (RequestDetailLocationDto detailLocation : detailLocations) {
+            detailLocationList.add(detailLocation.toEntity());
+        }
+        for(RequestPostTransportDto requestPostTransportDto:postTransports){
+            postTransportList.add(requestPostTransportDto.toEntity());
     private List<RequestPostTransPortDto> postTransports;
     private List<RequestDetailLocationDto> detailLocations;
     private Long location_id;

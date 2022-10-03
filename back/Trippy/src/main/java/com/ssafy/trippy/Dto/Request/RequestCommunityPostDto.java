@@ -2,7 +2,6 @@ package com.ssafy.trippy.Dto.Request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.trippy.Domain.CommunityPost;
-import com.ssafy.trippy.Domain.Location;
 import com.ssafy.trippy.Domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
