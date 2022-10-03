@@ -1,6 +1,6 @@
 //package com.ssafy.trippy.RepositoryTest;
 //
-//import com.ssafy.trippy.Entity.Member;
+//import com.ssafy.trippy.Domain.Member;
 //import com.ssafy.trippy.Repository.MemberRepository;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

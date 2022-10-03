@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### yml,properties ###
+application-jwt.yml
+application-aws.yml
+email.properties
+### pem ###
+I7A506T.pem
+### txt ###
+toubuntu.txt

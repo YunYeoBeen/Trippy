@@ -1,56 +1,59 @@
 package com.ssafy.trippy.Dto.Response;
 
-import com.ssafy.trippy.Entity.DetailLocation;
-import com.ssafy.trippy.Entity.Post;
-import com.ssafy.trippy.Entity.PostTransport;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ssafy.trippy.Domain.*;
+import com.ssafy.trippy.Dto.Converter.Converter;
+import com.ssafy.trippy.Dto.Request.RequestPostCommentDto;
+import com.ssafy.trippy.Service.S3Uploader;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ResponsePostDto {
+
     private Long id;
     private String title;
-    private Byte isDelete;
     private int company;
     private int count;
+    private String countryName;
+    private String cityName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime endDate;
-    private int representiveImg;
+    private int representativeImg;
+    private String name;
     private Long memberId;
-    private List<PostTransport> postTransports;
-    private List<DetailLocation> detailLocations;
+    private List<ResponseTransport> postTransports;
+    private List<ResponseDetailLocationDto> detailLocations;
 
-    public ResponsePostDto (Post post){
-        this.id=post.getId();
+    private List<ResponsePostCommentDto> comments;
+    private List<ResponseRouteDto> routes;
+
+
+    @Builder
+    public ResponsePostDto(Post post) {
+        this.countryName = post.getLocation().getCountryName();
+        this.cityName = post.getLocation().getCityName();
+        this.id = post.getId();
         this.title = post.getTitle();
-        this.isDelete = post.getIsDelete();
-        this.company=post.getCompany();
+        this.company = post.getCompany();
         this.count = post.getCount();
         this.startDate = post.getStartDate();
         this.endDate = post.getEndDate();
-        this.representiveImg = post.getRepresentiveImg();
+        this.representativeImg = post.getRepresentiveImg();
+        this.name = post.getMember().getName();
+        this.postTransports = Converter.convertTransportList(Converter.convertTransportsToPostTransports(post.getPostTransports()));
+        this.detailLocations = Converter.convertDetailLocationList(post.getDetailLocations());
+        this.comments = Converter.convertPostCommentList(post.getPostComments());
+        this.routes = Converter.convertRouteList(post.getRoutes());
         this.memberId = post.getMember().getId();
-        this.postTransports = post.getPostTransports();
-        this.detailLocations = post.getDetailLocations();
-    }
-
-    @Builder
-    public ResponsePostDto(Long id, String title, Byte isDelete, int company, int count, LocalDateTime startDate, LocalDateTime endDate, int representiveImg, Long memberId, List<PostTransport> postTransports, List<DetailLocation> detailLocations) {
-        this.id = id;
-        this.title = title;
-        this.isDelete = isDelete;
-        this.company = company;
-        this.count = count;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.representiveImg = representiveImg;
-        this.memberId = memberId;
-        this.postTransports = postTransports;
-        this.detailLocations = detailLocations;
     }
 }

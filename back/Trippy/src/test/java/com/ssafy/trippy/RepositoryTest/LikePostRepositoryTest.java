@@ -1,8 +1,8 @@
 //package com.ssafy.trippy.RepositoryTest;
 //
-//import com.ssafy.trippy.Entity.LikePost;
-//import com.ssafy.trippy.Entity.Member;
-//import com.ssafy.trippy.Entity.Post;
+//import com.ssafy.trippy.Domain.LikePost;
+//import com.ssafy.trippy.Domain.Member;
+//import com.ssafy.trippy.Domain.Post;
 //import com.ssafy.trippy.Repository.LikePostRepository;
 //import com.ssafy.trippy.Repository.MemberRepository;
 //import com.ssafy.trippy.Repository.PostRepository;

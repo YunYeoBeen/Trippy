@@ -1,7 +1,7 @@
 //package com.ssafy.trippy.RepositoryTest;
 //
-//import com.ssafy.trippy.Entity.Follow;
-//import com.ssafy.trippy.Entity.Member;
+//import com.ssafy.trippy.Domain.Follow;
+//import com.ssafy.trippy.Domain.Member;
 //import com.ssafy.trippy.Repository.FollowRepository;
 //import com.ssafy.trippy.Repository.MemberRepository;
 //import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.ssafy.trippy.Repository;
 
-import com.ssafy.trippy.Entity.Member;
-import com.ssafy.trippy.Entity.MemberBadge;
+import com.ssafy.trippy.Domain.Member;
+import com.ssafy.trippy.Domain.MemberBadge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

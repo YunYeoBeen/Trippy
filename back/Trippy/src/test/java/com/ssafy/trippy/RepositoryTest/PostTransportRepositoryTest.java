@@ -1,8 +1,8 @@
 //package com.ssafy.trippy.RepositoryTest;
-//import com.ssafy.trippy.Entity.Member;
-//import com.ssafy.trippy.Entity.Post;
-//import com.ssafy.trippy.Entity.PostTransport;
-//import com.ssafy.trippy.Entity.Transport;
+//import com.ssafy.trippy.Domain.Member;
+//import com.ssafy.trippy.Domain.Post;
+//import com.ssafy.trippy.Domain.PostTransport;
+//import com.ssafy.trippy.Domain.Transport;
 //import com.ssafy.trippy.Repository.MemberRepository;
 //import com.ssafy.trippy.Repository.PostRepository;
 //import com.ssafy.trippy.Repository.PostTransportRepository;

@@ -1,9 +1,9 @@
 //package com.ssafy.trippy.RepositoryTest;
 //
-//import com.ssafy.trippy.Entity.DetailLocation;
-//import com.ssafy.trippy.Entity.Location;
-//import com.ssafy.trippy.Entity.Member;
-//import com.ssafy.trippy.Entity.Post;
+//import com.ssafy.trippy.Domain.DetailLocation;
+//import com.ssafy.trippy.Domain.Location;
+//import com.ssafy.trippy.Domain.Member;
+//import com.ssafy.trippy.Domain.Post;
 //import com.ssafy.trippy.Repository.DetailLocationRepository;
 //import com.ssafy.trippy.Repository.LocationRepository;
 //import com.ssafy.trippy.Repository.MemberRepository;

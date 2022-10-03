@@ -1,8 +1,8 @@
 //package com.ssafy.trippy.RepositoryTest;
 //
-//import com.ssafy.trippy.Entity.Badge;
-//import com.ssafy.trippy.Entity.Member;
-//import com.ssafy.trippy.Entity.MemberBadge;
+//import com.ssafy.trippy.Domain.Badge;
+//import com.ssafy.trippy.Domain.Member;
+//import com.ssafy.trippy.Domain.MemberBadge;
 //import com.ssafy.trippy.Repository.BadgeRepository;
 //import com.ssafy.trippy.Repository.MemberBadgeRepository;
 //import com.ssafy.trippy.Repository.MemberRepository;
