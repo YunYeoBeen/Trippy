@@ -3,8 +3,10 @@ import HomeView from '../views/HomeView.vue'
 
 import DiaryCreateView from '../views/diary/DiaryCreateView.vue'
 import LoginView from '@/views/account/LoginView.vue'
-import SignUpView from '@/views/account/LoginView.vue'
+import SignUpView from '@/views/account/SignUpView.vue'
+import SignUpOptionView from '@/views/account/SignUpOptionView.vue'
 import PasswordFindView from '@/views/account/PasswordFindView.vue'
+import PasswordChangeView from '@/views/account/PasswordChangeView.vue'
 
 
 const routes = [
@@ -37,9 +39,19 @@ const routes = [
     component: SignUpView
   },
   {
+    path: '/signup/option',
+    name: 'signUpOption',
+    component: SignUpOptionView
+  },
+  {
     path: '/passwordfind',
     name: 'passwordFind',
     component: PasswordFindView
+  },
+  {
+    path: '/passwordchange',
+    name: 'passwordChange',
+    component: PasswordChangeView
   },
 
   

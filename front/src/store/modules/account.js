@@ -1,6 +1,4 @@
-import { createStore } from 'vuex'
-
-export default createStore({
+export default {
   state: {
   },
   getters: {
@@ -11,4 +9,4 @@ export default createStore({
   },
   modules: {
   }
-})
+}
